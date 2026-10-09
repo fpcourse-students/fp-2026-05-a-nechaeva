@@ -1,0 +1,10 @@
+:t Examples.Node
+:k Examples.Tree
+height tree
+transform (+ 10) tree
+(xs, ys, zs)
+:t Level1.startTask
+:t Level2.parseOptions
+:t Level3.insert
+:t 1
+:quit
