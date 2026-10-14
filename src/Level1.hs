@@ -14,15 +14,15 @@ import MetaUtils (todo)
 
 -- E.leafCount E.tree
 predictedLeaves :: Int
-predictedLeaves = todo "1.1 leaves"
+predictedLeaves = 3
 
 -- E.transform (> 2) E.tree
 predictedMapped :: E.Tree Bool
-predictedMapped = todo "1.1 mapped"
+predictedMapped = E.Node (E.Leaf False) False (E.Node (E.Leaf True) True (E.Leaf True))
 
 -- (E.xs, E.ys, E.zs)
 predictedVersions :: ([Int], [Int], [Int])
-predictedVersions = todo "1.1 versions"
+predictedVersions = ([3,4], [1,3,4], [2,1,3,4])
 
 
 -- 1.2. Дерево с произвольным числом детей.
@@ -39,10 +39,10 @@ data IntTree = Leaf | Node Int [IntTree]
 sumIntTree :: IntTree -> Int
 sumIntTree t = case t of
   Leaf -> 0
-  Node x children -> todo "1.2 node"
+  Node x children -> x + sumChildren children
 
 sumChildren :: [IntTree] -> Int
-sumChildren = todo "1.2 children"
+sumChildren = sum.map sumIntTree
 
 
 -- 1.3. Все результаты или отказ.
@@ -58,7 +58,9 @@ applyMaybeList f xs = case xs of
   [] -> Just []
   x : rest -> case f x of
     Nothing -> Nothing
-    Just y -> todo "1.3"
+    Just y -> case applyMaybeList f rest of
+      Nothing -> Nothing
+      Just ys -> Just (y:ys)
 
 
 -- 1.4. Контрпример вместо объяснения.
@@ -77,7 +79,7 @@ parsePositiveBuggy :: [Int] -> Maybe [Int]
 parsePositiveBuggy xs = Just (filter (> 0) xs)
 
 badInput :: [Int]
-badInput = todo "1.4"
+badInput = [-1, 1]
 
 
 -- 1.5. Вспомните записи.
@@ -99,4 +101,8 @@ data Task = Task
   deriving (Eq, Show)
 
 startTask :: Task -> Task
-startTask = todo "1.5"
+startTask t 
+  | taskStatus t == Planned =
+    t { taskStatus = Running
+    , taskAttempts = taskAttempts t + 1 }
+  | otherwise = t
