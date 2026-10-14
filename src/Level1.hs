@@ -105,4 +105,4 @@ startTask t
   | taskStatus t == Planned =
     t { taskStatus = Running
     , taskAttempts = taskAttempts t + 1 }
-  |otherwise = t
+  | otherwise = t
